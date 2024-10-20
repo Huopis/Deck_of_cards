@@ -3,23 +3,11 @@
 
 #include "deck.h"
 
-int main(int argc, char **argv){
+int main(){
+
     Deck deck;
-    if (argc > 1 && 0 < atoi(argv[1]) && atoi(argv[1]) < 53){
-        for(int i = 0; i < atoi(argv[1]); i++){
-            deck.add();
-        }
-    } else {
-        deck.fill();
-    }
-    std::cout << "Deck before shuffle:\n";
-    deck.reveal();
-    deck.shuffle();
-    std::cout << "Deck after shuffle:\n";
-    deck.reveal();
-    std::cout << "Top card:\n";
-    deck.reveal_top();
-    std::cout << "There is " << deck.size() << " cards in the deck.\n";
+    deck.fill();
+
     bool play_on = true;
 
     int hand_count = 0;
@@ -37,30 +25,54 @@ int main(int argc, char **argv){
 
     while (play_on){
         if(player_x_turn > hand_count){player_x_turn = 1;}
-        std::string action; 
-        std::cout << "Player " << player_x_turn << " turn. Select action (1-4): \n1: Draw a card from deck\n2: Draw x amount of cards\n3: Reveal hand\n4: Stop game\n";
-        std::cin >> action;
+        std::string action = "0";
+        while (stoi(action) < 1 || stoi(action) > 7){
+            std::cout << "Player " << player_x_turn << " turn. Select action (1-7)\n\
+                    1: Draw a card from deck\n\
+                    2: Draw x amount of cards\n\
+                    3: Reveal hand\n\
+                    4: Reveal the deck\n\
+                    5: Reveal top card of the deck\n\
+                    6: Skip turn\n\
+                    7: Stop the game\n";
+            std::cin >> action;
+        }
         switch (stoi(action))
         {
         case 1:
+            if (deck.size() <= 0){
+                std::cout << "No cards in deck!\n";
+                break;
+            }
             deck.draw(hands[player_x_turn-1]);
             player_x_turn++;
             break;
         case 2: {
-            std::string amount = "";
-            std::cout << "Select amount of cards to take 1 - " << deck.size() << ": ";
-            std::cin >> amount;
-            if(stoi(amount) > 0 && stoi(amount) <= deck.size()){
-                deck.take(stoi(amount), hands[player_x_turn-1]);
+            if (deck.size() <= 0){
+                std::cout << "No cards in deck!\n";
+                break;
+            }
+            std::string amount = "0";
+            while(deck.take(stoi(amount), hands[player_x_turn-1]) < 1) {
+                std::cout << "Select amount of cards to take 1 - " << deck.size() << ": ";
+                std::cin >> amount;
             }
             player_x_turn++;
             break;
         }
         case 3:
             hands[player_x_turn-1].reveal();
-            player_x_turn++;
             break;
         case 4:
+            deck.reveal();
+            break;
+        case 5:
+            deck.reveal_top();
+            break;
+        case 6:
+            player_x_turn++;
+            break;
+        case 7:
             play_on = false;
             break;
         default:

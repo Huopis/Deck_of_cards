@@ -49,23 +49,28 @@ void Deck::add(){
     cards_buffer_.pop_back();
 }
 
-void Deck::draw(Deck &hand){
+int Deck::draw(Deck &deck){
     if(size() > 0){
-        hand.cards_.push_back(cards_.back());
+        deck.cards_.push_back(cards_.back());
         cards_.pop_back();
+        return 1;
     } else {
         std::cout << "Deck is empty of cards!\n";
+        return 0;
     }
 }
 
-void Deck::take(const int &amount, Deck &hand){
+int Deck::take(const int &amount, Deck &deck){
+    int drawn = 0;
     if(size() >= amount){
         for(int i = 0; i < amount; i++){
-            draw(hand);
+            draw(deck);
+            drawn++;
         }
     } else {
         std::cout << "Amount for cards to take is greater than cards in the deck. Deck has " << size() << " cards.\n";
     }
+    return drawn;
 }
 
 void Deck::shuffle(){
@@ -94,6 +99,8 @@ void Deck::reveal_top(){
     cards_.back().display();
 }
 
-int Deck::size() {
-    return cards_.size();
+unsigned Deck::size() {
+    if (cards_.size() >= 0){
+        return cards_.size();
+    } else { return 0;}
 }
