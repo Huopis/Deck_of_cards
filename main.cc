@@ -4,9 +4,23 @@
 #include "deck.h"
 
 int main() {
-
   Deck deck;
-  deck.fill();
+
+  std::cout << "Welcome!\n";
+  std::string selection = "0";
+  while(selection != "f" && !(stoi(selection) > 0 && stoi(selection) < 52)){
+    std::cout << "Please select to play on full deck (f) or x amount of cars (1-51)\n";
+    std::cin >> selection;
+  }
+  if(selection == "f"){
+    deck.fill();
+  } else {
+    for(int i = 0; i < stoi(selection); i++){
+      deck.add();
+    }
+  }
+
+  std::cout << "Remember to shuffle your deck :)\n";
 
   bool play_on = true;
 
@@ -28,15 +42,17 @@ int main() {
       player_x_turn = 1;
     }
     std::string action = "0";
-    while (stoi(action) < 1 || stoi(action) > 7) {
-      std::cout << "Player " << player_x_turn << " turn. Select action (1-7)\n\
+    while (stoi(action) < 1 || stoi(action) > 9) {
+      std::cout << "Player " << player_x_turn << " turn. Select action (1-9)\n\
                     1: Draw a card from deck\n\
                     2: Draw x amount of cards\n\
                     3: Reveal hand\n\
                     4: Reveal the deck\n\
                     5: Reveal top card of the deck\n\
-                    6: Skip turn\n\
-                    7: Stop the game\n";
+                    6: Show deck size\n\
+                    7: Suffle deck\n\
+                    8: Skip turn\n\
+                    9: Stop the game\n";
       std::cin >> action;
     }
     switch (stoi(action)) {
@@ -72,9 +88,15 @@ int main() {
       deck.reveal_top();
       break;
     case 6:
-      player_x_turn++;
+      std::cout << "Cards in deck: " << deck.size() << "\n";
       break;
     case 7:
+      deck.shuffle();
+      break;
+    case 8:
+      player_x_turn++;
+      break;
+    case 9:
       play_on = false;
       break;
     default:

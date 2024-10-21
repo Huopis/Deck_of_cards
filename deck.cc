@@ -89,8 +89,6 @@ Deck::Deck() {
       cards_buffer_.emplace_back(static_cast<Suite>(i), static_cast<Power>(j));
     }
   }
-  std::shuffle(std::begin(cards_buffer_), std::end(cards_buffer_),
-               random_number_generator_);
 }
 
 void Deck::reveal() {
