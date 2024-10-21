@@ -3,7 +3,7 @@
 
 #include "deck.h"
 
-int main() {
+int main() { //This is simple commandline runnable visualization of the Deck class usage.
   Deck deck;
   deck.fill();
 
