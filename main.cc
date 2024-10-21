@@ -8,14 +8,15 @@ int main() {
 
   std::cout << "Welcome!\n";
   std::string selection = "0";
-  while(selection != "f" && !(stoi(selection) > 0 && stoi(selection) < 52)){
-    std::cout << "Please select to play on full deck (f) or x amount of cars (1-51)\n";
+  while (selection != "f" && !(stoi(selection) > 0 && stoi(selection) < 52)) {
+    std::cout << "Please select to play on full deck (f) or x amount of cars "
+                 "(1-51)\n";
     std::cin >> selection;
   }
-  if(selection == "f"){
+  if (selection == "f") {
     deck.fill();
   } else {
-    for(int i = 0; i < stoi(selection); i++){
+    for (int i = 0; i < stoi(selection); i++) {
       deck.add();
     }
   }
