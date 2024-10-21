@@ -5,23 +5,9 @@
 
 int main() {
   Deck deck;
+  deck.fill();
 
   std::cout << "Welcome!\n";
-  std::string selection = "0";
-  while (selection != "f" && !(stoi(selection) > 0 && stoi(selection) < 52)) {
-    std::cout << "Please select to play on full deck (f) or x amount of cars "
-                 "(1-51)\n";
-    std::cin >> selection;
-  }
-  if (selection == "f") {
-    deck.fill();
-  } else {
-    for (int i = 0; i < stoi(selection); i++) {
-      deck.add();
-    }
-  }
-
-  std::cout << "Remember to shuffle your deck :)\n";
 
   bool play_on = true;
 
@@ -38,6 +24,7 @@ int main() {
   Deck hands[hand_count];
   int player_x_turn = 1;
 
+  std::cout << "Remember to shuffle your deck :)\n";
   while (play_on) {
     if (player_x_turn > hand_count) {
       player_x_turn = 1;

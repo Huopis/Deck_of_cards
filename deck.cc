@@ -45,19 +45,24 @@ void Deck::fill() {
   }
 }
 
-void Deck::add() {
-  cards_.push_back(std::move(cards_buffer_.back()));
-  cards_buffer_.pop_back();
+bool Deck::add() {
+  if (!cards_buffer_.empty()) {
+    cards_.push_back(std::move(cards_buffer_.back()));
+    cards_buffer_.pop_back();
+    return true;
+  } else {
+    return false;
+  }
 }
 
-int Deck::draw(Deck &deck) {
+bool Deck::draw(Deck &deck) {
   if (size() > 0) {
     deck.cards_.push_back(cards_.back());
     cards_.pop_back();
-    return 1;
+    return true;
   } else {
     std::cout << "Deck is empty of cards!\n";
-    return 0;
+    return false;
   }
 }
 
@@ -65,8 +70,9 @@ int Deck::take(const int &amount, Deck &deck) {
   int drawn = 0;
   if (size() >= amount) {
     for (int i = 0; i < amount; i++) {
-      draw(deck);
-      drawn++;
+      if (draw(deck)) {
+        drawn++;
+      }
     }
   } else {
     std::cout << "Amount for cards to take is greater than cards in the deck. "

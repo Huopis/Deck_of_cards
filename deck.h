@@ -49,7 +49,9 @@ public:
   ~Deck() = default;
 
   //! @brief Method to add single card from cards_buffer_ to the deck.
-  void add();
+  //! @retval If card added succesfully returns true. If action failed returns
+  //! false;
+  bool add();
 
   //! @brief Method to fill deck with regular 52 cards. Also possible to fill
   //! deck with remaining cards from cards_buffer_. Uses add() method.
@@ -58,8 +60,9 @@ public:
   //! @brief Method to draw card from deck to another deck, most commonly to
   //! "hand".
   //! @param [in] deck Deck variable where card is drawn to.
-  //! @retval If card drawn succesfullly returns 1. If action failed returns 0;
-  int draw(Deck &deck);
+  //! @retval If card drawn succesfully returns true. If action failed returns
+  //! false;
+  bool draw(Deck &deck);
 
   //! @brief Method to take multiple cards from deck to deck (hand).
   //! @param [in] amount Amount of cards to draw from deck.
